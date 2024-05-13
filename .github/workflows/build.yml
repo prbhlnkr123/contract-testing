@@ -1,0 +1,44 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+  PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
+  GIT_COMMIT: ${{ github.sha }}
+  GIT_REF: ${{ github.ref }}
+
+jobs:
+  publish_contract_tests:
+    runs-on: [self-hosted, ubuntu, docker]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+
+      - name: Publish Pact to Pactflow if tests pass
+        if: success()
+
+        run: |
+          GIT_BRANCH=${GITHUB_REF#refs/heads/}
+          docker run --rm \
+            -e PACT_BROKER_BASE_URL=$PACT_BROKER_BASE_URL \
+            -e PACT_BROKER_TOKEN=$PACT_BROKER_TOKEN \
+            -e GIT_COMMIT=$GIT_COMMIT \
+            -e GIT_BRANCH=$GIT_BRANCH \
+            -e PACT_DO_NOT_TRACK=true \
+            -v ${PWD}/build/pacts:/pacts \
+            pactfoundation/pact-cli:latest \
+            publish /pacts \
+            --consumer-app-version $APP_VERSION+$GIT_COMMIT \
+            --branch $GIT_BRANCH \
+            --tag $GIT_BRANCH
