@@ -24,7 +24,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew build
 
       - name: Echo pacts directory
         run:  ls ${PWD}/build/pacts
