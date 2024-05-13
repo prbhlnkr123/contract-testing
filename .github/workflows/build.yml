@@ -12,7 +12,7 @@ env:
 
 jobs:
   publish_contract_tests:
-    runs-on: [self-hosted, ubuntu, docker]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
