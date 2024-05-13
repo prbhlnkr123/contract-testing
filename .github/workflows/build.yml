@@ -26,6 +26,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
 
+      - name: Echo pacts directory
+        run:  ls ${PWD}/build/pacts
+
       - name: Publish Pact to Pactflow if tests pass
         if: success()
 
