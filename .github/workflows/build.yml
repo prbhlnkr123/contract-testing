@@ -28,6 +28,7 @@ jobs:
 
   publish_contract_tests:
     runs-on: ubuntu-latest
+    needs: [ run_contract_tests ]
     steps:
       - name: Publish Pact to Pactflow if tests pass
         if: success()
@@ -52,6 +53,7 @@ jobs:
 
   pact_verify:
     runs-on: ubuntu-latest
+    needs: [ publish_contract_tests ]
     steps:
       - name: Run provider test
         run: ./gradlew runProviderTest
