@@ -26,13 +26,23 @@ jobs:
       - name: Run tests
         run: ./gradlew runConsumerTest
 
+      - name: Upload build/pacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pacts
+          path: build/pacts
+
   publish_contract_tests:
     runs-on: ubuntu-latest
     needs: [ run_contract_tests ]
     steps:
-      - name: Publish Pact to Pactflow if tests pass
-        if: success()
+      - name: Download artifact build/pacts
+        uses: actions/download-artifact@v3
+        with:
+          name: pacts
+          path: build/pacts
 
+      - name: Publish Pact to Pactflow if tests pass
         run: |
           GIT_BRANCH=${GITHUB_REF#refs/heads/}
           docker run --rm \
