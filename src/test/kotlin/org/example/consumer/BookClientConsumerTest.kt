@@ -3,7 +3,6 @@ package org.example.consumer
 import au.com.dius.pact.consumer.MockServer
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider
-import au.com.dius.pact.consumer.junit5.PactConsumerTest
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt
 import au.com.dius.pact.consumer.junit5.PactTestFor
 import au.com.dius.pact.core.model.V4Pact
@@ -23,7 +22,7 @@ import org.springframework.web.client.RestTemplate
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [BookConsumerApplication::class])
 @ExtendWith(PactConsumerTestExt::class, SpringExtension::class)
 @AutoConfigureMockMvc
-class BookClientContractTest() {
+class BookClientConsumerTest() {
 
     private val bookResponseBody =
         PactDslJsonBody()

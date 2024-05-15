@@ -24,6 +24,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("au.com.dius.pact.consumer:junit5:4.6.5")
+    testImplementation("au.com.dius.pact.provider:junit5spring:4.6.9")
 }
 
 tasks.withType<KotlinCompile> {
@@ -35,4 +36,20 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register<Test>("runConsumerTest"){
+    description = "Runs consumer tests"
+    group = "verification"
+
+    // Specify the test classes/packages to include
+    include("org/example/consumer/*ConsumerTest.class")
+}
+
+tasks.register<Test>("runProviderTest"){
+    description = "Runs provider tests"
+    group = "verification"
+
+    // Specify the test classes/packages to include
+    include("org/example/provider/*ProviderTest.class")
 }
