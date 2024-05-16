@@ -10,6 +10,8 @@ env:
   GIT_COMMIT: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
   GIT_BRANCH: ${{ github.ref_name }}
+  CONSUMER: "bookClient"
+  PROVIDER: "bookProvider"
 
 jobs:
   run_contract_tests:
@@ -43,8 +45,8 @@ jobs:
             --branch $GIT_BRANCH \
             --tag $GIT_BRANCH
 
-      - name: Deploy to Test Environment
-        run: echo "Deploy to TEST Environment"
+      - name: can-I-deploy
+        run: pact-broker can-i-deploy --pacticipant $CONSUMER --version $GIT_COMMIT --to-environment TEST
 
       - name: Run provider test
         run: ./gradlew runProviderTest
