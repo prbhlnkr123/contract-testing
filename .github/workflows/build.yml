@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 env:
-  PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
-  PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
+  PACT_FLOW_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+  PACT_FLOW_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
   GIT_COMMIT: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
 
@@ -30,8 +30,8 @@ jobs:
         run: |
           GIT_BRANCH=${GITHUB_REF#refs/heads/}
           docker run --rm \
-            -e PACT_BROKER_BASE_URL=$PACT_BROKER_BASE_URL \
-            -e PACT_BROKER_TOKEN=$PACT_BROKER_TOKEN \
+            -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
+            -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
             -e GIT_COMMIT=$GIT_COMMIT \
             -e GIT_BRANCH=$GIT_BRANCH \
             -e PACT_DO_NOT_TRACK=true \

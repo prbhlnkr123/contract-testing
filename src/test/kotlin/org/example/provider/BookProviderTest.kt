@@ -23,9 +23,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8080"], classes =  [BookProviderApplication::class])
 @Provider("bookProvider")
 @PactBroker(
-    url = "https://mycompanyt.pactflow.io",
-    authentication = PactBrokerAuth(token = "3y6m3pBVs9q8HNJ4-sC6tg"),
-    consumers = ["bookClient"])
+    url = "\${PACT_FLOW_BASE_URL}",
+    authentication = PactBrokerAuth(token = "\${PACT_FLOW_TOKEN}")
+)
 class BookProviderTest {
 
     @MockBean
@@ -35,9 +35,8 @@ class BookProviderTest {
     lateinit var target: HttpTestTarget
 
     @BeforeEach
-    fun before(context: PactVerificationContext) {
+    fun before() {
         target = HttpTestTarget("localhost", 8080)
-        context.target = target
     }
 
     @TestTemplate
