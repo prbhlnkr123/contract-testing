@@ -50,7 +50,7 @@ class BookProviderTest {
     @Test
     @State("the book exist")
     fun getBookVerificationTest() {
-        val book = Book("test book", "test")
+        val book = Book(title="test book", author="test")
         `when`(bookService.getBook()).thenReturn(book)
     }
 }
