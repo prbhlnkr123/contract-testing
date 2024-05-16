@@ -37,7 +37,7 @@ class BookClientConsumerTest() {
             .given("the book exist")
             .uponReceiving("get all books")
             .method("GET")
-            .pathFromProviderState("/books", "/books")
+            .path("/books")
             .willRespondWith()
             .status(200)
             .body(bookResponseBody)
