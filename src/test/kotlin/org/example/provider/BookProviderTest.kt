@@ -20,7 +20,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8080"], classes =  [BookProviderApplication::class])
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+    properties = ["server.port=8080"],
+    classes =  [BookProviderApplication::class]
+)
 @Provider("bookProvider")
 @PactBroker(
     url = "\${PACT_FLOW_BASE_URL}",
