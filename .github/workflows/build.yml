@@ -62,7 +62,7 @@ jobs:
            -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
            -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
             pactfoundation/pact-cli:latest \
-            pact-broker record-deployment --broker-base-url=$PACT_FLOW_BASE_URL --broker-token=$PACT_FLOW_TOKEN --pacticipant $CONSUMER --version $GIT_COMMIT --environment 'TEST'
+            pact-broker record-deployment --broker-base-url=$PACT_FLOW_BASE_URL --broker-token=$PACT_FLOW_TOKEN --pacticipant $CONSUMER --version $GIT_COMMIT --environment 'test'
 
       - name: Run provider test
         run: ./gradlew runProviderTest
