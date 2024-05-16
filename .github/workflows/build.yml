@@ -41,7 +41,7 @@ jobs:
             -v ${PWD}/build/pacts:/pacts \
             pactfoundation/pact-cli:latest \
             publish /pacts \
-            --consumer-app-version $APP_VERSION+$GIT_COMMIT \
+            --consumer-app-version $GIT_COMMIT \
             --branch $GIT_BRANCH \
             --tag $GIT_BRANCH
 
