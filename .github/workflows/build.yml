@@ -46,7 +46,12 @@ jobs:
             --tag $GIT_BRANCH
 
       - name: can-I-deploy
-        run: pact-broker can-i-deploy --pacticipant $CONSUMER --version $GIT_COMMIT --to-environment TEST
+        run: |
+          docker run --rm \
+           -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
+           -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
+            pactfoundation/pact-cli:latest \
+            pact-broker can-i-deploy --pacticipant $CONSUMER --latest
 
       - name: Run provider test
         run: ./gradlew runProviderTest
