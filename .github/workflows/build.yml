@@ -9,6 +9,7 @@ env:
   PACT_FLOW_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
   GIT_COMMIT: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
+  GIT_BRANCH: ${{ github.ref_name }}
 
 jobs:
   run_contract_tests:

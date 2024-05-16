@@ -52,7 +52,7 @@ tasks.register<Test>("runProviderTest"){
 
     // Specify the test classes/packages to include
     include("org/example/provider/*ProviderTest.class")
-    systemProperty("pact.provider.version", System.getenv("GIT_SHA"))
+    systemProperty("pact.provider.version", System.getenv("GIT_COMMIT"))
     systemProperty("pact.provider.tag", System.getenv("GIT_BRANCH"))
     systemProperty("pact.provider.branch", System.getenv("GIT_BRANCH"))
 }
