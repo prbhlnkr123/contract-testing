@@ -24,7 +24,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @Provider("bookProvider")
 @PactBroker(
     url = "\${PACT_FLOW_BASE_URL}",
-    authentication = PactBrokerAuth(token = "\${PACT_FLOW_TOKEN}")
+    authentication = PactBrokerAuth(token = "\${PACT_FLOW_TOKEN}"),
+    providerTags = ["main"]
 )
 class BookProviderTest {
 
