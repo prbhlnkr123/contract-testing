@@ -17,7 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Provider("bookProvider")
-@PactBroker(url = "https://mycompanyt.pactflow.io", authentication = PactBrokerAuth(token = "3y6m3pBVs9q8HNJ4-sC6tg"))
+@PactBroker(
+    url = "https://mycompanyt.pactflow.io",
+    authentication = PactBrokerAuth(token = "3y6m3pBVs9q8HNJ4-sC6tg"),
+    consumers = ["bookClient"])
 class BookProviderTest {
 
     @MockBean

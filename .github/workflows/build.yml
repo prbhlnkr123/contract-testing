@@ -26,22 +26,6 @@ jobs:
       - name: Run tests
         run: ./gradlew runConsumerTest
 
-      - name: Upload build/pacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: pacts
-          path: build/pacts
-
-  publish_contract_tests:
-    runs-on: ubuntu-latest
-    needs: [ run_contract_tests ]
-    steps:
-      - name: Download artifact build/pacts
-        uses: actions/download-artifact@v3
-        with:
-          name: pacts
-          path: build/pacts
-
       - name: Publish Pact to Pactflow if tests pass
         run: |
           GIT_BRANCH=${GITHUB_REF#refs/heads/}
@@ -60,19 +44,6 @@ jobs:
 
       - name: Deploy to Test Environment
         run: echo "Deploy to TEST Environment"
-
-  pact_verify:
-    runs-on: ubuntu-latest
-    needs: [ publish_contract_tests ]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
 
       - name: Run provider test
         run: ./gradlew runProviderTest
