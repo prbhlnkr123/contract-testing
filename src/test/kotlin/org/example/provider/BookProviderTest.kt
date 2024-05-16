@@ -2,7 +2,8 @@ package org.example.provider
 
 import au.com.dius.pact.provider.junitsupport.Provider
 import au.com.dius.pact.provider.junitsupport.State
-import au.com.dius.pact.provider.junitsupport.loader.PactFolder
+import au.com.dius.pact.provider.junitsupport.loader.PactBroker
+import au.com.dius.pact.provider.junitsupport.loader.PactBrokerAuth
 import org.example.provider.model.Book
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Provider("bookProvider")
-@PactFolder("pacts")
+@PactBroker(url = "https://mycompanyt.pactflow.io", authentication = PactBrokerAuth(token = "3y6m3pBVs9q8HNJ4-sC6tg"))
 class BookProviderTest {
 
     @MockBean
