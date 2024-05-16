@@ -53,5 +53,16 @@ jobs:
             pactfoundation/pact-cli:latest \
             pact-broker can-i-deploy --pacticipant $CONSUMER --latest
 
+      - name: Deploy to Test
+        run: echo "Deploy to TEST Environment"
+
+      - name: Record Deployment for TEST
+        run: |
+          docker run --rm \
+           -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
+           -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
+            pactfoundation/pact-cli:latest \
+            pact-broker record-deployment --broker-base-url=$PACT_FLOW_BASE_URL --broker-token=$PACT_FLOW_TOKEN --pacticipant $CONSUMER --version $GIT_COMMIT --environment 'TEST'
+
       - name: Run provider test
         run: ./gradlew runProviderTest
