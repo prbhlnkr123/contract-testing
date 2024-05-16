@@ -20,10 +20,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8080"],)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = ["server.port=8080"], classes =  [BookProviderApplication::class])
 @Provider("bookProvider")
 @PactBroker(
-    host = "mycompanyt.pactflow.io",
+    url = "https://mycompanyt.pactflow.io",
     authentication = PactBrokerAuth(token = "3y6m3pBVs9q8HNJ4-sC6tg"),
     consumers = ["bookClient"])
 class BookProviderTest {

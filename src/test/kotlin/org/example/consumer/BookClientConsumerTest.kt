@@ -14,7 +14,9 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.client.RestTemplate
 
@@ -26,8 +28,8 @@ class BookClientConsumerTest() {
 
     private val bookResponseBody =
         PactDslJsonBody()
-            .stringType("title")
-            .stringType("author")
+            .stringType("title", "test book")
+            .stringType("author", "test")
 
     @Pact(consumer = "bookClient", provider= "bookProvider")
     fun getBooks(builder: PactDslWithProvider): V4Pact {
@@ -35,7 +37,7 @@ class BookClientConsumerTest() {
             .given("the book exist")
             .uponReceiving("get all books")
             .method("GET")
-            .pathFromProviderState("/books/\${id}", "/books/100")
+            .pathFromProviderState("/books", "/books")
             .willRespondWith()
             .status(200)
             .body(bookResponseBody)
@@ -45,11 +47,13 @@ class BookClientConsumerTest() {
     @Test
     @PactTestFor(pactMethod = "getBooks")
     fun `test integration with book provider`(mockServer: MockServer) {
-        val book: Book = Book(title = "test", author = "author")
+        val book = Book(title = "test", author = "author")
+        val requestHeaders = HttpHeaders()
+        requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
         val response = RestTemplate().exchange(
-            mockServer.getUrl() + "/books/100",
+            mockServer.getUrl() + "/books",
             HttpMethod.GET,
-            HttpEntity(bookResponseBody),
+            HttpEntity<Any>(requestHeaders),
             Any::class.java)
         assertNotNull(response.body)
     }
