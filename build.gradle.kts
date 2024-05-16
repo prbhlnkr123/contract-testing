@@ -51,5 +51,5 @@ tasks.register<Test>("runProviderTest"){
     group = "verification"
 
     // Specify the test classes/packages to include
-    include("org/example/provider/*ProviderTest.class")
+    include("org/example/provider/*ProviderPactTest.class")
 }
