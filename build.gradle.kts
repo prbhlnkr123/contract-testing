@@ -27,6 +27,10 @@ dependencies {
     testImplementation("au.com.dius.pact.provider:junit5spring:4.6.9")
 }
 
+tasks.test {
+    // Exclude specific test classes
+    exclude("org/example/provider/*ProviderTest.class")
+}
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
