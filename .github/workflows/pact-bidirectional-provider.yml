@@ -28,7 +28,7 @@ jobs:
       - name: Publish Provider Contract
         run: |
           docker run --rm \
-          -v ${PWD}/${OAS_PATH}:/oas
+          -v ${PWD}/${OAS_PATH}:/oas \
           pactfoundation/pact-cli:latest \
           pactflow publish-provider-contract /oas \
           --provider ${PROVIDER} \
