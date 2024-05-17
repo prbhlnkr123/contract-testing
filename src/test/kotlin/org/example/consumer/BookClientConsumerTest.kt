@@ -43,10 +43,36 @@ class BookClientConsumerTest() {
             .body(bookResponseBody)
             .toPact(V4Pact::class.java)
     }
+    @Pact(consumer = "bookClient", provider= "bookBiDrectionalProvider")
+    fun getBooksForBdct(builder: PactDslWithProvider): V4Pact {
+        return builder
+            .given("the book exist")
+            .uponReceiving("get all books")
+            .method("GET")
+            .path("/books")
+            .willRespondWith()
+            .status(200)
+            .body(bookResponseBody)
+            .toPact(V4Pact::class.java)
+    }
 
     @Test
     @PactTestFor(pactMethod = "getBooks")
     fun `test integration with book provider`(mockServer: MockServer) {
+        val book = Book(title = "test", author = "author")
+        val requestHeaders = HttpHeaders()
+        requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
+        val response = RestTemplate().exchange(
+            mockServer.getUrl() + "/books",
+            HttpMethod.GET,
+            HttpEntity<Any>(requestHeaders),
+            Any::class.java)
+        assertNotNull(response.body)
+    }
+
+    @Test
+    @PactTestFor(pactMethod = "getBooksForBdct")
+    fun `test integration with book bidirectional provider`(mockServer: MockServer) {
         val book = Book(title = "test", author = "author")
         val requestHeaders = HttpHeaders()
         requestHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())

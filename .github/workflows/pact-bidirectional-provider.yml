@@ -1,4 +1,4 @@
-name: Pact-Provider
+name: Pact-BiDirectional-Provider
 
 on:
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
           docker run --rm \
           pactfoundation/pact-cli:latest \
           pactflow publish-provider-contract \
-          ${OAS_PATH} \
+          ${PWD}/${OAS_PATH} \
           --provider ${PROVIDER} \
           --provider-app-version ${GIT_COMMIT} \
           --branch ${GIT_BRANCH} \
