@@ -43,7 +43,7 @@ class BookClientConsumerTest() {
             .body(bookResponseBody)
             .toPact(V4Pact::class.java)
     }
-    @Pact(consumer = "bookClient", provider= "bookBiDrectionalProvider")
+    @Pact(consumer = "bookBiDirectionalClient", provider= "bookBiDrectionalProvider")
     fun getBooksForBdct(builder: PactDslWithProvider): V4Pact {
         return builder
             .given("the book exist")
