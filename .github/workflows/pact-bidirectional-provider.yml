@@ -1,0 +1,58 @@
+name: Pact-Provider
+
+on:
+  workflow_dispatch:
+
+env:
+  PACT_FLOW_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+  PACT_FLOW_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
+  GIT_COMMIT: ${{ github.sha }}
+  GIT_REF: ${{ github.ref }}
+  GIT_BRANCH: ${{ github.ref_name }}
+  PROVIDER: "bookBidirectionalProvider"
+  OAS_PATH: "src/main/kotlin/org/example/provider/oas/swagger.yaml"
+
+jobs:
+  run_contract_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Publish Provider Contract
+        run: |
+          docker run --rm \
+          pactfoundation/pact-cli:latest \
+          pactflow publish-provider-contract \
+          ${OAS_PATH} \
+          --provider ${PROVIDER} \
+          --provider-app-version ${GIT_COMMIT} \
+          --branch ${GIT_BRANCH} \
+          --content-type application/yaml \
+          --broker-base-url=$PACT_FLOW_BASE_URL \
+          --broker-token=$PACT_FLOW_TOKEN
+
+      - name: can-I-deploy
+        run: |
+          docker run --rm \
+           -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
+           -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
+            pactfoundation/pact-cli:latest \
+            pact-broker can-i-deploy --pacticipant $PROVIDER --latest
+
+      - name: Deploy to Test
+        run: echo "Deploy to TEST Environment"
+
+      - name: Record Deployment for TEST
+        run: |
+          docker run --rm \
+           -e PACT_BROKER_BASE_URL=$PACT_FLOW_BASE_URL \
+           -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
+            pactfoundation/pact-cli:latest \
+            pact-broker record-deployment --broker-base-url=$PACT_FLOW_BASE_URL --broker-token=$PACT_FLOW_TOKEN --pacticipant $PROVIDER --version $GIT_COMMIT --environment 'test'

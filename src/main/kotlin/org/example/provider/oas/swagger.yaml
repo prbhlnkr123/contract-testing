@@ -1,0 +1,31 @@
+openapi: "3.1.0"
+info:
+  title: "contract_testing API"
+  description: "contract_testing API"
+  version: "1.0.0"
+servers:
+  - url: "https://contract_testing"
+paths:
+  /books:
+    get:
+      summary: "GET books"
+      operationId: "getBook"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Book"
+components:
+  schemas:
+    Book:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        author:
+          type: "string"
+      required:
+        - "title"
+        - "author"
