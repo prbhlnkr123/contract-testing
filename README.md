@@ -8,7 +8,6 @@ This repository demonstrates contract testing using PactFlow. It includes a cons
 - [Setup](#setup)
 - [Consumer Application](#consumer-application)
 - [Provider Application](#provider-application)
-- [Running the Applications](#running-the-applications)
 - [Contract Testing](#contract-testing)
     - [Consumer-Driven Contract Testing](#consumer-driven-contract-testing)
     - [Bidirectional Contract Testing](#bidirectional-contract-testing)
@@ -78,5 +77,5 @@ Bidirectional contract testing uses PactFlow to automatically infer the provider
 
 ## Resources
 
-[Consumer Driven Contract Testing ](https://pactflow.io/what-is-consumer-driven-contract-testing/)
-[BiDirectional Contract Testing ](https://pactflow.io/bi-directional-contract-testing/)
+ - [Consumer Driven Contract Testing ](https://pactflow.io/what-is-consumer-driven-contract-testing/)
+ - [BiDirectional Contract Testing ](https://pactflow.io/bi-directional-contract-testing/)
