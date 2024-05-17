@@ -1,5 +1,8 @@
 name: Pact-Provider
 
+on:
+  workflow_dispatch:
+
 env:
   PACT_FLOW_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
   PACT_FLOW_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
