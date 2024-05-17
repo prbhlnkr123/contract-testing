@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate
 class BookClient(private val restTemplate: RestTemplate, @Value("\${book.provider.url}") private val baseUrl: String) {
 
     fun getBook(): Book {
-        val response = restTemplate.getForObject("$baseUrl/book/1", Book::class.java)
+        val response = restTemplate.getForObject("$baseUrl/books", Book::class.java)
         return response!!
     }
 }
