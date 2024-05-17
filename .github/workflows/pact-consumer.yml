@@ -1,8 +1,4 @@
-name: Build
-
-on:
-  push:
-  workflow_dispatch:
+name: Pact-Consumer
 
 env:
   PACT_FLOW_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
@@ -11,7 +7,6 @@ env:
   GIT_REF: ${{ github.ref }}
   GIT_BRANCH: ${{ github.ref_name }}
   CONSUMER: "bookClient"
-  PROVIDER: "bookProvider"
 
 jobs:
   run_contract_tests:
@@ -63,6 +58,3 @@ jobs:
            -e PACT_BROKER_TOKEN=$PACT_FLOW_TOKEN \
             pactfoundation/pact-cli:latest \
             pact-broker record-deployment --broker-base-url=$PACT_FLOW_BASE_URL --broker-token=$PACT_FLOW_TOKEN --pacticipant $CONSUMER --version $GIT_COMMIT --environment 'test'
-
-      - name: Run provider test
-        run: ./gradlew runProviderTest
